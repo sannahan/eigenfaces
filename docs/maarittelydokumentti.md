@@ -6,8 +6,8 @@ Toteutan labrassa Eigenfaces-algoritmin, jota voidaan käyttää kasvojentunnist
 
 Käytän projektissani pääasiassa seuraavaa kahta lähdettä:
 
-Coding the Matrix. Philip N. Klein (2013). Newtonian Press.
-Eigenfaces for Recognition. Matthew Turk and Alex Pentland (1991). Massachusetts Insitute of Technology.
+- Coding the Matrix. Philip N. Klein (2013). Newtonian Press.
+- Eigenfaces for Recognition. Matthew Turk and Alex Pentland (1991). Massachusetts Insitute of Technology.
 
 Näistä jälkimmäinen on Eigenfaces-algoritmin kehittäjien laatima artikkeli, joka kuvaa algoritmin vaiheet ja käyttökohteet. Coding the Matrix -kirja esittelee, miten lineaarialgebraa voi hyödyntää tietojenkäsittelytieteen sovelluksissa. Kirjasta on (toivottavasti) hyötyä algoritmin käytännön toteutuksessa.
 
