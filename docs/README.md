@@ -6,4 +6,5 @@
 
 ## Dokumentaatio
 
-[Määrittelydokumentti](https://github.com/sannahan/eigenfaces/blob/main/docs/maarittelydokumentti.md)
+[Määrittelydokumentti](https://github.com/sannahan/eigenfaces/blob/master/docs/maarittelydokumentti.md
+)
