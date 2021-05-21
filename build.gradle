@@ -1,14 +1,53 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'jacoco'
+    id 'checkstyle'
+}
+
+checkstyle {
+    toolVersion '8.17';    // your choice here
 }
 
 application {
     mainClass = 'Main'
 }
 
+javafx {
+    version = '11'
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'Main'
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+task myJavadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
+
+mainClassName = 'Main'
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['Main.class',
+            'ui/GraafinenKayttoliittyma.class'])
+        }))
     }
 }
