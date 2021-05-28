@@ -8,6 +8,7 @@ Epäselväksi jäi:
 - varasin nyt kirjastosta Wilkinsonin ja Reinschin Linear Algebra -kirjan, jolle matlabkin käsittääkseni pohjaa
 - eigenfaces-luokkaan jäi nyt yksi 4 miljoonan alkion for-loop (rivit 78-84), jolle en keksinyt tehokkaampaa laskutapaa:
 
+```Java
     // yhtälö 6 Turkin ja Pentlandin artikkelista
     for (int kuva = 0; kuva < 10; kuva++) {
       for (int sigmaIndeksi = 0; sigmaIndeksi < 40; sigmaIndeksi++) {
@@ -16,6 +17,7 @@ Epäselväksi jäi:
         }
       }
     }
+```
 
 Mitä teen seuraavaksi:
 
