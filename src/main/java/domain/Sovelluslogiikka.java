@@ -37,8 +37,19 @@ public class Sovelluslogiikka {
     }
     
     /**
-     * Metodi kirjoittaa kuvavektorin kuvaksi, joka voidaan näyttää JavaFX:n avulla
+     * Metodi kirjoittaa eigenfaces-luokassa lasketun eigenface-vektorin kuvaksi
      * 
+     * @param valittuEigenface mikä kymmenestä eigenfaces-kuvasta kirjoitetaan
+     * @return Image-kuva
+     */
+    public Image kirjoitaEigenface(int valittuEigenface) {
+        return kirjoitaEigenfaceKuvaksi(eigenfaces.laskeEigenfaces(), valittuEigenface);
+    }
+    
+    /**
+     * Metodi kirjoittaa kuvavektorin kuvaksi, joka voidaan näyttää JavaFX:n avulla, kun kuvavektori on int[]
+     * 
+     * @param int[] kuvavektori
      * @return Image-kuva
      */
     public Image kirjoitaPikselitKuvaksi(int[] kuvavektori) {
@@ -55,5 +66,51 @@ public class Sovelluslogiikka {
         }
         
         return kohdekuva;
+    }
+    
+    /**
+     * Metodi kirjoittaa kuvavektorin kuvaksi, joka voidaan näyttää JavaFX:n avulla, kun kuvavektori on double[].
+     * 
+     * @param double[] kuvavektori
+     * @return Image-kuva
+     */
+    public Image kirjoitaPikselitKuvaksi(double[] kuvavektori) {
+        int[] kokonaislukuKuvavektori = new int[kuvavektori.length];
+        for (int indeksi = 0; indeksi < kuvavektori.length; indeksi++) {
+            kokonaislukuKuvavektori[indeksi] = (int) kuvavektori[indeksi];
+        }
+        return kirjoitaPikselitKuvaksi(kokonaislukuKuvavektori);
+    }
+    
+    /**
+     * Metodi kirjoittaa valitun eigenface-vektorin kuvaksi.
+     * Vektori voi sisältää negatiivisia arvoja, joten metodi muuttaa arvot vastaamaan asteikkoa 0-255.
+     * 
+     * @param eigenfaces-matriisi
+     * @param valitunEigenfacenIndeksi
+     * @return Image-kuva
+     */
+    private Image kirjoitaEigenfaceKuvaksi(double[][] eigenfaces, int valitunEigenfacenIndeksi) {
+        double max = Double.MIN_VALUE;
+        double min = Double.MAX_VALUE;
+        for (int i = 0; i < LEVEYS*KORKEUS; i++) {
+            if (eigenfaces[valitunEigenfacenIndeksi][i] > max) {
+                max = eigenfaces[valitunEigenfacenIndeksi][i];
+            }
+            if (eigenfaces[valitunEigenfacenIndeksi][i] < min) {
+                min = eigenfaces[valitunEigenfacenIndeksi][i];
+            }
+        }
+        
+        double[] kirjoitettavaEigenface = new double[LEVEYS*KORKEUS];
+        
+        for (int i = 0; i < LEVEYS*KORKEUS; i++) {
+            eigenfaces[valitunEigenfacenIndeksi][i] += Math.abs(min);
+            double kerroin = 255 / (max + Math.abs(min));
+            eigenfaces[valitunEigenfacenIndeksi][i] *= kerroin;
+            kirjoitettavaEigenface[i] = eigenfaces[valitunEigenfacenIndeksi][i];
+        }
+        
+        return kirjoitaPikselitKuvaksi(kirjoitettavaEigenface);
     }
 }

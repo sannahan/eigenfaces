@@ -1,18 +1,14 @@
 package ui;
 
-import dao.Kuvanlukija;
 import domain.Sovelluslogiikka;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.paint.Color;
 
 /**
  * JavaFX-toteutus algoritmin toiminnan havainnollistamiseksi
@@ -21,14 +17,25 @@ public class GraafinenKayttoliittyma extends Application {
     @Override
     public void start(Stage stage) {
         Sovelluslogiikka sl = new Sovelluslogiikka();
-        Image kohdeKuva = sl.kirjoitaKeskiarvokasvot();
-            
+        
+        BorderPane asettelu = new BorderPane();
+        
+        Image kohdeKuva = sl.kirjoitaKeskiarvokasvot();    
         ImageView kuva = new ImageView(kohdeKuva);
-
         Pane pane = new Pane();
         pane.getChildren().add(kuva);
-
-        stage.setScene(new Scene(pane));
+        
+        GridPane gridpane = new GridPane();
+        int eigenface = 0;
+        for (int x = 0; x < 2; x++) {
+            for (int y = 0; y < 5; y++) {
+                gridpane.add(new ImageView(sl.kirjoitaEigenface(eigenface)), x, y);
+                eigenface++;
+            }
+        }
+        asettelu.setTop(pane);
+        asettelu.setCenter(gridpane);
+        stage.setScene(new Scene(asettelu));
         stage.show();   
     }
     
