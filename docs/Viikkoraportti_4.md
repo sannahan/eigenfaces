@@ -14,6 +14,7 @@ Epäselväksi jäi:
 
 Mitä teen seuraavaksi:
 
-- en vielä tiedä, mitä teen seuraavaksi. Sovitaan tosiaan tapaaminen ensi viikon alkuun!
+- dokumentaation jatkaminen ja suorituskykytestit, joita en ehtinyt aloittamaan tällä viikolla
+- projektin osalta en vielä tiedä, mitä teen seuraavaksi. Sovitaan tosiaan tapaaminen ensi viikon alkuun!
 
-Tuntimäärä: 10 tuntia
+Tuntimäärä: 6 tuntia
