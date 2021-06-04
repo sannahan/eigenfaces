@@ -28,6 +28,18 @@ public class Sovelluslogiikka {
     }
     
     /**
+     * Sovelluslogiikka saa eigenfaces- ja kuvanlukija-luokat parametrina.
+     * Riippuvuuksien injektointi parantaa testattavuutta.
+     * 
+     * @param kuvanlukija
+     * @param eigenfaces 
+     */
+    public Sovelluslogiikka(Kuvanlukija kuvanlukija, Eigenfaces eigenfaces) {
+        this.kuvanlukija = kuvanlukija;
+        this.eigenfaces = eigenfaces;
+    }
+    
+    /**
      * Metodi kirjoittaa eigenfaces-luokassa lasketun keskiarvokasvovektorin ("the average face") kuvaksi
      * 
      * @return Image-kuva
@@ -112,5 +124,30 @@ public class Sovelluslogiikka {
         }
         
         return kirjoitaPikselitKuvaksi(kirjoitettavaEigenface);
+    }
+    
+    /**
+     * Metodi tarkastaa, kuka opetusdatan henkilöistä on lähimpänä haettavaa kuvaa.
+     * Metodi palauttaa kyseisen henkilön ensimmäisen kuvan aineistossa.
+     * 
+     * @param hlo monesko henkilö aineistosta valitaan
+     * @param kuva monesko kyseisen henkilön kuva valitaan
+     * @return Image-kuva
+     */
+    public Image haeHenkilo(String hlo, String kuva) {
+        int[] kuvavektori = kuvanlukija.lueKuva("att_faces/s" + hlo + "/" + kuva + ".pgm");
+        int hloTulos = eigenfaces.euklidinenEtaisyys(kuvavektori);
+        return kirjoitaPikselitKuvaksi(kuvanlukija.lueKuva("att_faces/s" + String.valueOf(hloTulos + 20) + "/1.pgm"));
+    }
+    
+    /**
+     * Metodi palauttaa haettavan kuvan.
+     * 
+     * @param hlo monesko henkilö aineistosta valitaan
+     * @param kuva monesko kyseisen henkilön kuva valitaan
+     * @return Image-kuva
+     */
+    public Image kirjoitaHakutulos(String hlo, String kuva) {
+        return kirjoitaPikselitKuvaksi(kuvanlukija.lueKuva("att_faces/s" + hlo + "/" + kuva + ".pgm"));
     }
 }

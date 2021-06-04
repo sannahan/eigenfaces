@@ -32,9 +32,9 @@ public class EigenfacesTest {
     @Test
     public void keskiarvoKasvotVahennetaanOpetusdatasta() {
         double[] keskiarvokuva = eigenfaces.laskeKeskiarvoKasvot();
-        eigenfaces.vahennaKeskiarvoKasvotOpetusdatasta(keskiarvokuva);
+        double[][] opetusdata = eigenfaces.vahennaKeskiarvoKasvotOpetusdatasta(keskiarvokuva);
         
-        assertEquals(195, eigenfaces.getOpetusdata()[0][0], 0.1);
-        assertEquals(195, eigenfaces.getOpetusdata()[0][10303], 0.1);
+        assertEquals(195, opetusdata[0][0], 0.1);
+        assertEquals(195, opetusdata[0][10303], 0.1);
     }
 }

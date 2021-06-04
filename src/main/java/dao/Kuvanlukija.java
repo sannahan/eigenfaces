@@ -36,17 +36,18 @@ public class Kuvanlukija {
         for (int henkilo = 20; henkilo < 30; henkilo++) {
             for (int kuva = 1; kuva < 5; kuva++) {
                 String tiedostoNimi = "att_faces/s" + String.valueOf(henkilo) + "/" + String.valueOf(kuva) + ".pgm";
-                lueKuva(tiedostoNimi);
+                int[] kuvavektori = lueKuva(tiedostoNimi);
+                lisaaKuvavektoriMatriisiin(kuvavektori);
             }
         }
     }
     
     /**
-     * Metodi muodostaa vektorin kuvan pikseleistä ja lisää sen opetusdatamatriisiin
+     * Metodi muodostaa vektorin kuvan pikseleistä
      * 
      * @param tiedostoNimi  kuvatiedosto
      */
-    public void lueKuva(String tiedostoNimi) {
+    public int[] lueKuva(String tiedostoNimi) {
         int[] kuvavektori = new int[leveys*korkeus];
             
         try {
@@ -62,7 +63,7 @@ public class Kuvanlukija {
             e.printStackTrace();
         }
         
-        lisaaKuvavektoriMatriisiin(kuvavektori);
+        return kuvavektori;
     }
     
     private void ohitaOtsake(DataInputStream syoteVirta) throws Exception {
