@@ -1,6 +1,25 @@
 # Eigenfaces – kasvojentunnistus
 
-Kasvodatan lähde: AT&T Laboratories Cambridge 
+Kasvodatan lähde: AT&T Laboratories Cambridge
+
+## Käyttöohjeet
+
+Aja projekti komennolla
+```
+./gradlew run
+```
+Testaus suoritetaan komennolla
+```
+./gradlew test
+```
+Testikattavuusraportti muodostetaan komennolla
+```
+./gradlew test jacocoTestReport
+```
+Checkstyle-tarkastus suoritetaan komennolla
+```
+./gradlew checkstyleMain
+```
 
 ## Raportit
 
@@ -11,7 +30,8 @@ Kasvodatan lähde: AT&T Laboratories Cambridge
 
 ## Dokumentaatio
 
-[Määrittelydokumentti](https://github.com/sannahan/eigenfaces/blob/master/docs/maarittelydokumentti.md
-)
+- [Määrittelydokumentti](https://github.com/sannahan/eigenfaces/blob/master/docs/maarittelydokumentti.md)
+- [Toteutusdokumentti](https://github.com/sannahan/eigenfaces/blob/master/docs/toteutusdokumentti.md)
+- [Testausdokumentti](https://github.com/sannahan/eigenfaces/blob/master/docs/testausdokumentti.md)
 
 [![codecov](https://codecov.io/gh/sannahan/eigenfaces/branch/master/graph/badge.svg?token=43PR0GWMAF)](https://codecov.io/gh/sannahan/eigenfaces)
