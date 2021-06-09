@@ -25,4 +25,5 @@ Kurssin ohjaajan kanssa on sovittu, että ohjelmaa kehitetään niin, että kasv
 - valitaan 10 henkilöstä 4 kuvaa opetusdataksi ja 6 kuvaa testidataksi
 - valitaan 10 henkilöstä 2 x 4 kuvaa opetusdataksi ja 2 kuvaa testidataksi
 - valitaan 10 henkilöstä 3 x 3 kuvaa opetusdataksi ja 1 kuva testidataksi (vaihdellen testidatana käytettävää kuvaa ja käyttäen kolmen lähimmän naapurin menetelmää)
+
 Näin saatuja testituloksia verrataan keskenään. Samalla on sovittu, että projektissa saa käyttää Javan kirjastoja ominaisarvojen ja -vektoreiden laskemiseen.
