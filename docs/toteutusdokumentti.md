@@ -8,4 +8,6 @@ Ohjelmassa on kolme pakkausta: dao, domain ja ui. Dao sisältää kuvien lukemis
 
 ## Parannusehdotukset
 
+Kuvan mittasuhteet määritellään tällä hetkellä sovelluslogiikka-luokassa. Jos ohjelmaa haluttaisiin laajentaa käsittelemään myös muun kokoista kuvadataa, tulisi leveys ja korkeus lukea kuvan otsakkeesta.
+
 ## Lähteet

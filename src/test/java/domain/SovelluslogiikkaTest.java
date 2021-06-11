@@ -73,7 +73,7 @@ public class SovelluslogiikkaTest {
     public void metodiHaeHenkiloMuodostaaOikeanTiedostopolun() {
         when(mockKuvanlukija.lueKuva("att_faces/s20/1.pgm")).thenReturn(new int[10304]);
         
-        sovelluslogiikkaMock.haeHenkilo("20", "6");
+        sovelluslogiikkaMock.tunnistaHenkilo("20", "6");
         verify(mockKuvanlukija).lueKuva(eq("att_faces/s20/6.pgm"));
     }
     
@@ -81,15 +81,33 @@ public class SovelluslogiikkaTest {
     public void metodiHaeHenkiloKutsuuEuklidisenEtaisyydenLaskevaaMetodia() {
         when(mockKuvanlukija.lueKuva("att_faces/s20/1.pgm")).thenReturn(new int[10304]);
         
-        sovelluslogiikkaMock.haeHenkilo("20", "6");
-        verify(mockEigenfaces, times(1)).euklidinenEtaisyys(any());
+        sovelluslogiikkaMock.tunnistaHenkilo("20", "6");
+        verify(mockEigenfaces, times(1)).lyhinEuklidinenEtaisyys(any());
     }
     
     @Test
     public void metodiKirjoitaHakutulosMuodostaaOikeanTiedostopolun() {
         when(mockKuvanlukija.lueKuva("att_faces/s20/6.pgm")).thenReturn(new int[10304]);
         
-        sovelluslogiikkaMock.kirjoitaHakutulos("20", "6");
+        sovelluslogiikkaMock.kirjoitaHakuKuvaksi("20", "6");
         verify(mockKuvanlukija).lueKuva(eq("att_faces/s20/6.pgm"));
+    }
+    
+    @Test
+    public void tunnistusYhdellaLuokallaOnnistuuYli80ProsenttiaTapauksista() {
+        double onnistumisprosentti = sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaYksiNeljanKuvanLuokkaPerHenkilo();
+        assertTrue(onnistumisprosentti > 80);
+    }
+    
+    @Test
+    public void tunnistusKahdellaLuokallaOnnistuuYli80ProsenttiaTapauksista() {
+        double onnistumisprosentti = sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaKaksiNeljanKuvanLuokkaaPerHenkilo();
+        assertTrue(onnistumisprosentti > 80);
+    }
+    
+    @Test
+    public void tunnistusKolmellaLuokallaOnnistuuYli80ProsenttiaTapauksista() {
+        double onnistumisprosentti = sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaKolmeKolmenKuvanLuokkaaPerHenkilo();
+        assertTrue(onnistumisprosentti > 80);
     }
 }

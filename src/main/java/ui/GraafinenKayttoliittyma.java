@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,12 +29,16 @@ public class GraafinenKayttoliittyma extends Application {
         
         VBox kuvat = luoHavainnollistavatKuvat();
         VBox haku = luoHakutoiminnallisuus();
+        HBox tilastot = luoTilastot();
         
         asettelu.setLeft(kuvat);
         asettelu.setRight(haku);
+        asettelu.setBottom(tilastot);
+        
         Insets marginaali = new Insets(10);
         BorderPane.setMargin(kuvat, marginaali);
         BorderPane.setMargin(haku, marginaali);
+        BorderPane.setMargin(tilastot, marginaali);
         
         stage.setScene(new Scene(asettelu));
         stage.show();   
@@ -75,13 +80,25 @@ public class GraafinenKayttoliittyma extends Application {
         nappi.setOnAction((event) -> {
             hakuTulokset.getChildren().clear();
             hakuTulokset.getChildren().add(new Label("Hakemasi kuva"));
-            hakuTulokset.getChildren().add(new ImageView(sovelluslogiikka.kirjoitaHakutulos(hloNro.getText(), kuvaNro.getText())));
+            hakuTulokset.getChildren().add(new ImageView(sovelluslogiikka.kirjoitaHakuKuvaksi(hloNro.getText(), kuvaNro.getText())));
             hakuTulokset.getChildren().add(new Label("Hakutulos"));
-            hakuTulokset.getChildren().add(new ImageView(sovelluslogiikka.haeHenkilo(hloNro.getText(), kuvaNro.getText())));  
+            hakuTulokset.getChildren().add(new ImageView(sovelluslogiikka.tunnistaHenkilo(hloNro.getText(), kuvaNro.getText())));  
         });
         hakuToiminnallisuus.getChildren().add(hakuTulokset);
         
         return hakuToiminnallisuus;
+    }
+    
+    public HBox luoTilastot() {
+        HBox tilastot = new HBox();
+        tilastot.setSpacing(10);
+        
+        Label onnistumisprosenttiYhdenLuokanTapauksessa = new Label(String.valueOf(sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaYksiNeljanKuvanLuokkaPerHenkilo()));
+        Label onnistumisprosenttiKahdenLuokanTapauksessa = new Label(String.valueOf(sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaKaksiNeljanKuvanLuokkaaPerHenkilo()));
+        Label onnistumisprosenttiKolmenLuokanTapauksessa = new Label(String.valueOf(sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaKolmeKolmenKuvanLuokkaaPerHenkilo()));
+        tilastot.getChildren().addAll(new Label("Yksi luokka"), onnistumisprosenttiYhdenLuokanTapauksessa, new Label("Kaksi luokkaa"), onnistumisprosenttiKahdenLuokanTapauksessa, new Label("Kolme luokkaa"), onnistumisprosenttiKolmenLuokanTapauksessa);
+        
+        return tilastot;
     }
     
     public static void main(String[] args) {

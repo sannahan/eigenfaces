@@ -1,3 +1,6 @@
 sources/
 build/
 .gradle
+peer_reviews/
+demo/
+vara

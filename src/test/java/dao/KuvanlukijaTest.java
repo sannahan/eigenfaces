@@ -14,8 +14,7 @@ public class KuvanlukijaTest {
     
     @Test
     public void opetusdatamatriisiinLuetaan40Kuvaa() {
-        kuvanlukija.lueOpetusdata();
-        int[][] opetusdata = kuvanlukija.getOpetusdata();
+        int[][] opetusdata = kuvanlukija.lueOpetusdata(1, 1, 10,4);
         
         boolean kaikkiKuvatLuettu = true;
         

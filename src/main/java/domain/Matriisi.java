@@ -11,6 +11,31 @@ public class Matriisi {
     }
     
     /**
+     * Konstruktori muuttaa kokonaislukuarvot liukuluvuiksi
+     * @param matriisi kokonaislukumatriisi
+     */
+    public Matriisi(int[][] matriisi1, int[][] matriisi2) {
+        int riveja = matriisi1.length + matriisi2.length;
+        int sarakkeita = matriisi1[0].length;
+        
+        this.matriisi = new double[riveja][sarakkeita];
+ 
+        for (int rivi = 0; rivi < matriisi1.length; rivi++) {
+            for (int sarake = 0; sarake < sarakkeita; sarake++) {
+                this.matriisi[rivi][sarake] = matriisi1[rivi][sarake];
+            }
+        }
+        
+        if (matriisi2.length > 0) {
+            for (int rivi = matriisi1.length; rivi < riveja; rivi++) {
+                for (int sarake = 0; sarake < sarakkeita; sarake++) {
+                    this.matriisi[rivi][sarake] = matriisi2[rivi-matriisi1.length][sarake];
+                }
+            }
+        }
+    }
+    
+    /**
      * Transpoosi saadaan, kun matriisin sarakkeet vaihdetaan riveiksi ja rivit sarakkeiksi
      */
     public void transpoosi() {

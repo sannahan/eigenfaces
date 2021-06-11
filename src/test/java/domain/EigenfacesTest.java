@@ -18,7 +18,7 @@ public class EigenfacesTest {
        testiOpetusdata[0][0] = 200;
        testiOpetusdata[0][10303] = 200;
        
-       eigenfaces = new Eigenfaces(testiOpetusdata, leveys, korkeus);
+       eigenfaces = new Eigenfaces(4, testiOpetusdata);
     }
     
     @Test
@@ -36,5 +36,15 @@ public class EigenfacesTest {
         
         assertEquals(195, opetusdata[0][0], 0.1);
         assertEquals(195, opetusdata[0][10303], 0.1);
+    }
+    
+    @Test
+    public void lahimmanNaapurinLaskevaMetodiHeittaaVirheenJosKParillinen() {
+        try {
+            eigenfaces.kLyhyintaEuklidistaEtaisyytta(new int[10304], 2);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Kokonaislukuparametrin tulee olla pariton", e.getMessage());
+        }
     }
 }
