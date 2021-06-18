@@ -28,6 +28,7 @@ Checkstyle-tarkastus suoritetaan komennolla
 - [Viikkoraportti 3](https://github.com/sannahan/eigenfaces/blob/master/docs/Viikkoraportti_3.md)
 - [Viikkoraportti 4](https://github.com/sannahan/eigenfaces/blob/master/docs/Viikkoraportti_4.md)
 - [Viikkoraportti 5](https://github.com/sannahan/eigenfaces/blob/master/docs/Viikkoraportti_5.md)
+- [Viikkoraportti 6](https://github.com/sannahan/eigenfaces/blob/master/docs/Viikkoraportti_6.md)
 
 ## Dokumentaatio
 
