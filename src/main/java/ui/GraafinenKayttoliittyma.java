@@ -1,6 +1,7 @@
 package ui;
 
 import domain.Sovelluslogiikka;
+import utils.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -29,16 +30,16 @@ public class GraafinenKayttoliittyma extends Application {
         
         VBox kuvat = luoHavainnollistavatKuvat();
         VBox haku = luoHakutoiminnallisuus();
-        HBox tilastot = luoTilastot();
+        //HBox tilastot = luoTilastot();
         
         asettelu.setLeft(kuvat);
         asettelu.setRight(haku);
-        asettelu.setBottom(tilastot);
+        //asettelu.setBottom(tilastot);
         
         Insets marginaali = new Insets(10);
         BorderPane.setMargin(kuvat, marginaali);
         BorderPane.setMargin(haku, marginaali);
-        BorderPane.setMargin(tilastot, marginaali);
+        //BorderPane.setMargin(tilastot, marginaali);
         
         stage.setScene(new Scene(asettelu));
         stage.show();   

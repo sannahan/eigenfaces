@@ -1,8 +1,6 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import utils.*;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.EigenDecomposition;
 
@@ -200,9 +198,8 @@ public class Eigenfaces {
             etaisyydet[luokka] = etaisyys;
         }
         
-        double[] etaisyydetPienimmastaSuurimpaan = etaisyydet.clone();
-        Arrays.sort(etaisyydetPienimmastaSuurimpaan);
-        
+        double[] etaisyydetPienimmastaSuurimpaan = new Sorttaus(etaisyydet.clone()).sorttausPienimmastaSuurimpaan();
+
         // valitaan pienimpiä etäisyyksiä vastaavien kasvoluokkien indeksit
         // jos lasketaan esim. kolmen lähimmän naapurin tapausta,
         // indeksit 0, 1 ja 2 vastaavat ensimmäistä opetusdatan henkilöä eli tapausta 0
@@ -216,18 +213,18 @@ public class Eigenfaces {
         }
         
         // lasketaan, kuinka monta kertaa kukakin alkio esiintyy aineistossa
-        Map<Integer, Integer> frekvenssit = new HashMap<>();
+        Hajautustaulu<Integer, Integer> frekvenssit = new Hajautustaulu<>();
         for (int i = 0; i < k; i++) {
-            if (!frekvenssit.containsKey(hlot[i])) {
-                frekvenssit.put(hlot[i], 0);
+            if (frekvenssit.hae(hlot[i]) == null) {
+                frekvenssit.lisaa(hlot[i], 0);
             }
-            frekvenssit.put(hlot[i], frekvenssit.get(hlot[i]) + 1);
+            frekvenssit.lisaa(hlot[i], frekvenssit.hae(hlot[i]) + 1);
         }
         
         // jos löytyy enemmistö, palautetaan se
-        for (Integer i: frekvenssit.keySet()) {
-            if (frekvenssit.get(i) > k / 2) {
-                return i;
+        for (int i = 0; i < k; i++) {
+            if (frekvenssit.hae(hlot[i]) > k / 2) {
+                return hlot[i];
             }
         }
         
