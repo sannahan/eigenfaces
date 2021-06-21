@@ -1,6 +1,7 @@
 package domain;
 
-import dao.Kuvanlukija;
+import dao.*;
+import utils.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -153,86 +154,9 @@ public class Sovelluslogiikka {
         return kirjoitaPikselitKuvaksi(kuvanlukija.lueKuva("att_faces/s" + hlo + "/" + kuva + ".pgm"));
     }
     
-    /**
-     * Opetusdataan luetaan neljä kuvaa / henkilö.
-     * Jäljellejäävää 6 kuvaa / henkilö käytetään testikuvina.
-     * 
-     * @return double onnistumisprosentti henkilöiden tunnistukselle
-     */
-    public double testaaOnnistumisprosenttiOpetusdatastaJossaYksiNeljanKuvanLuokkaPerHenkilo() {
-        Eigenfaces ef = luoOpetusdataTestiEigenfacesLuokalle(false);
-        int oikein = oikeinTunnistettujaKuvia(ef, 5, 10);
-        int testikuvaMaara = 60;
-        return (double) oikein / testikuvaMaara * 100;
-    }
-    
-    /**
-     * Opetusdataan luetaan kahdeksan kuvaa / henkilö niin, että jokaista henkilöä vastaa kaksi kasvoluokkaa.
-     * Hypoteesi on, että kaksi luokkaa tekee henkilöiden tunnistuksesta täsmällisempää.
-     * 
-     * @return double onnistumisprosentti henkilöiden tunnistukselle
-     */
-    public double testaaOnnistumisprosenttiOpetusdatastaJossaKaksiNeljanKuvanLuokkaaPerHenkilo() {
-        Eigenfaces ef = luoOpetusdataTestiEigenfacesLuokalle(true);
-        int oikein = oikeinTunnistettujaKuvia(ef, 9, 10);
-        int testikuvaMaara = 20;
-        return (double) oikein / testikuvaMaara * 100;
-    }
-    
-    private Eigenfaces luoOpetusdataTestiEigenfacesLuokalle(boolean kaksiLuokkaaPerHenkilo) {
-        int kuviaKasvoluokassa = 4;
-        int[][] opetusdataEnsimmaiselleLuokalle = kuvanlukija.lueOpetusdata(ENSIMMAINENHLO, ENSIMMAINENKUVA, HENKILOMAARA, kuviaKasvoluokassa);
-        if (kaksiLuokkaaPerHenkilo) {
-            int[][] opetusdataToiselleLuokalle = kuvanlukija.lueOpetusdata(ENSIMMAINENHLO, ENSIMMAINENKUVA + kuviaKasvoluokassa, HENKILOMAARA, kuviaKasvoluokassa);
-            return new Eigenfaces(kuviaKasvoluokassa, opetusdataEnsimmaiselleLuokalle, opetusdataToiselleLuokalle);
-        }
-        return new Eigenfaces(kuviaKasvoluokassa, opetusdataEnsimmaiselleLuokalle);
-    }
-    
-    private int oikeinTunnistettujaKuvia(Eigenfaces ef, int ensimmainenTestikuva, int viimeinenTestikuva) {
-        int oikein = 0;
-        for (int henkilo = ENSIMMAINENHLO; henkilo < ENSIMMAINENHLO + HENKILOMAARA; henkilo++) {
-            for (int testikuva = ensimmainenTestikuva; testikuva <= viimeinenTestikuva; testikuva++) {
-                int[] kuvavektori = kuvanlukija.lueKuva("att_faces/s" + henkilo + "/" + testikuva + ".pgm");
-                int hloTulos = ef.lyhinEuklidinenEtaisyys(kuvavektori) + ENSIMMAINENHLO;
-                if (hloTulos == henkilo) {
-                    oikein++;
-                }
-                // jos jokaisesta henkilöstä on kaksi kasvoluokkaa, tarkastetaan myös jälkimmäinen kasvoluokka
-                if (hloTulos - ENSIMMAINENHLO + 1 > HENKILOMAARA && hloTulos - HENKILOMAARA == henkilo) {
-                    oikein++;
-                }
-            }
-        }
-        return oikein;
-    }
-    
-    /**
-     * Opetusdataan luetaan yhdeksän kuvaa / henkilö.
-     * Jokaista kuvaa käytetään vuorollaan testikuvana (testikuvaa ei lueta opetusdataan).
-     * Lasketaan onnistumisprosenttien keskiarvo.
-     * 
-     * @return double onnistumisprosentti henkilöiden tunnistukselle
-     */
-    public double testaaOnnistumisprosenttiOpetusdatastaJossaKolmeKolmenKuvanLuokkaaPerHenkilo() {
-        double keskiarvo = 0;
-        
-        int testikuvaMaara = 10;
-        for (int testikuva = 1; testikuva <= testikuvaMaara; testikuva++) {
-            int[][] opetusdata = kuvanlukija.lueOpetusdataTestikuvaaVaihdellen(ENSIMMAINENHLO, ENSIMMAINENKUVA, HENKILOMAARA, testikuvaMaara, testikuva);
-            Eigenfaces ef = new Eigenfaces(3, opetusdata);
-            int oikein = 0;
-            for (int henkilo = ENSIMMAINENHLO; henkilo < ENSIMMAINENHLO + HENKILOMAARA; henkilo++) {
-                int[] kuvavektori = kuvanlukija.lueKuva("att_faces/s" + henkilo + "/" + testikuva + ".pgm");
-                int tarkasteltaviaNaapureita = 3;
-                int hloTulos = ef.kLyhyintaEuklidistaEtaisyytta(kuvavektori, tarkasteltaviaNaapureita) + ENSIMMAINENHLO;
-                if (hloTulos == henkilo) {
-                    oikein++;
-                }
-            }
-            keskiarvo += (double) oikein / testikuvaMaara * 100;
-        }
-        
-        return keskiarvo / testikuvaMaara;
+    public String testaaOnnistumisprosentit() {
+        Testaaja testaaja = new Testaaja(kuvanlukija, ENSIMMAINENHLO, ENSIMMAINENKUVA, HENKILOMAARA);
+        testaaja.testaaOnnistumisprosentit();
+        return testaaja.lueOnnistumisprosentit();
     }
 }

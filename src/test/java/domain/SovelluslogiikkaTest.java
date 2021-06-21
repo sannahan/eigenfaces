@@ -92,22 +92,4 @@ public class SovelluslogiikkaTest {
         sovelluslogiikkaMock.kirjoitaHakuKuvaksi("20", "6");
         verify(mockKuvanlukija).lueKuva(eq("att_faces/s20/6.pgm"));
     }
-    
-    @Test
-    public void tunnistusYhdellaLuokallaOnnistuuYli80ProsenttiaTapauksista() {
-        double onnistumisprosentti = sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaYksiNeljanKuvanLuokkaPerHenkilo();
-        assertTrue(onnistumisprosentti > 80);
-    }
-    
-    @Test
-    public void tunnistusKahdellaLuokallaOnnistuuYli80ProsenttiaTapauksista() {
-        double onnistumisprosentti = sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaKaksiNeljanKuvanLuokkaaPerHenkilo();
-        assertTrue(onnistumisprosentti > 80);
-    }
-    
-    @Test
-    public void tunnistusKolmellaLuokallaOnnistuuYli80ProsenttiaTapauksista() {
-        double onnistumisprosentti = sovelluslogiikka.testaaOnnistumisprosenttiOpetusdatastaJossaKolmeKolmenKuvanLuokkaaPerHenkilo();
-        assertTrue(onnistumisprosentti > 80);
-    }
 }

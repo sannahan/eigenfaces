@@ -1,4 +1,4 @@
-package domain;
+package utils;
 
 /**
  * Luokka tarjoaa matriisien käsittelyyn tarvittavan laskutoiminnallisuuden

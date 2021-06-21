@@ -1,5 +1,6 @@
-package domain;
+package utils;
 
+import utils.Matriisi;
 import java.util.Arrays;
 import static org.junit.Assert.*;
 import org.junit.Before;
