@@ -47,7 +47,7 @@ public class Sovelluslogiikka {
      * @return Image-kuva
      */
     public Image kirjoitaKeskiarvokasvot() {
-        return kirjoitaPikselitKuvaksi(eigenfaces.laskeKeskiarvoKasvot());
+        return kirjoitaPikselitKuvaksi(eigenfaces.getKeskiarvokasvot());
     }
     
     /**
@@ -57,7 +57,7 @@ public class Sovelluslogiikka {
      * @return Image-kuva
      */
     public Image kirjoitaEigenface(int valittuEigenface) {
-        return kirjoitaEigenfaceKuvaksi(eigenfaces.laskeEigenfaces(), valittuEigenface);
+        return kirjoitaEigenfaceKuvaksi(eigenfaces.getEigenfaces(), valittuEigenface);
     }
     
     /**
@@ -119,10 +119,11 @@ public class Sovelluslogiikka {
         double[] kirjoitettavaEigenface = new double[LEVEYS*KORKEUS];
         
         for (int i = 0; i < LEVEYS*KORKEUS; i++) {
-            eigenfaces[valitunEigenfacenIndeksi][i] += Math.abs(min);
+            double sallittuArvo = eigenfaces[valitunEigenfacenIndeksi][i];
+            sallittuArvo += Math.abs(min);
             double kerroin = 255 / (max + Math.abs(min));
-            eigenfaces[valitunEigenfacenIndeksi][i] *= kerroin;
-            kirjoitettavaEigenface[i] = eigenfaces[valitunEigenfacenIndeksi][i];
+            sallittuArvo *= kerroin;
+            kirjoitettavaEigenface[i] = sallittuArvo;
         }
         
         return kirjoitaPikselitKuvaksi(kirjoitettavaEigenface);

@@ -55,18 +55,18 @@ public class SovelluslogiikkaTest {
     
     @Test
     public void metodiKirjoitaKeskiarvokasvotKutsuuKeskiarvotLaskevaaMetodia() {
-        when(mockEigenfaces.laskeKeskiarvoKasvot()).thenReturn(new double[10304]);
+        when(mockEigenfaces.getKeskiarvokasvot()).thenReturn(new double[10304]);
         
         sovelluslogiikkaMock.kirjoitaKeskiarvokasvot();
-        verify(mockEigenfaces, times(1)).laskeKeskiarvoKasvot();
+        verify(mockEigenfaces, times(1)).getKeskiarvokasvot();
     }
     
     @Test
     public void metodiKirjoitaEigenfaceKutsuuEigenfacetLaskevaaMetodia() {
-        when(mockEigenfaces.laskeEigenfaces()).thenReturn(new double[10][10304]);
+        when(mockEigenfaces.getEigenfaces()).thenReturn(new double[10][10304]);
         
         sovelluslogiikkaMock.kirjoitaEigenface(0);
-        verify(mockEigenfaces, times(1)).laskeEigenfaces();
+        verify(mockEigenfaces, times(1)).getEigenfaces();
     }
     
     @Test
