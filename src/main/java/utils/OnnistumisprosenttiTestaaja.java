@@ -4,7 +4,7 @@ import domain.*;
 import dao.*;
 
 /**
- * Luokka sisältää raskaat tehokkuustestit, joita ei voida suorittaa yksikkötesteinä.
+ * Luokka testaa kasvotunnistuksen onnistuneisuutta.
  */
 public class OnnistumisprosenttiTestaaja implements Testaaja {
     private final int ensimmainenHlo;
@@ -20,12 +20,20 @@ public class OnnistumisprosenttiTestaaja implements Testaaja {
         this.henkiloMaara = henkiloMaara;
     }
     
+    /**
+     * Metodi käynnistää testaustoiminnallisuuden.
+     */
     public void testaa() {
         onnistumisprosentit[0] = testaaOnnistumisprosenttiOpetusdatastaJossaYksiNeljanKuvanLuokkaPerHenkilo();
         onnistumisprosentit[1] = testaaOnnistumisprosenttiOpetusdatastaJossaKaksiNeljanKuvanLuokkaaPerHenkilo();
         onnistumisprosentit[2] = testaaOnnistumisprosenttiOpetusdatastaJossaKolmeKolmenKuvanLuokkaaPerHenkilo();
     }
     
+    /**
+     * Metodi palauttaa testitulokset puolipisteellä eroteltuna.
+     * 
+     * @return String tulokset 
+     */
     public String lue() {
         StringBuilder sb = new StringBuilder();
         sb.append("4 opetuskuvaa, 6 testikuvaa / henkilö;");
