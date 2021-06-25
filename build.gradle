@@ -46,7 +46,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: ['Main.class',
-            'ui/GraafinenKayttoliittyma.class', 'utils/Testaaja.class'])
+            'ui/GraafinenKayttoliittyma.class', 'utils/SuorituskykyTestaaja.class',
+	    'utils/OnnistumisprosenttiTestaaja.class'])
         }))
     }
 }

@@ -156,8 +156,14 @@ public class Sovelluslogiikka {
     }
     
     public String testaaOnnistumisprosentit() {
-        Testaaja testaaja = new Testaaja(kuvanlukija, ENSIMMAINENHLO, ENSIMMAINENKUVA, HENKILOMAARA);
-        testaaja.testaaOnnistumisprosentit();
-        return testaaja.lueOnnistumisprosentit();
+        Testaaja testaaja = new OnnistumisprosenttiTestaaja(kuvanlukija, ENSIMMAINENHLO, ENSIMMAINENKUVA, HENKILOMAARA);
+        testaaja.testaa();
+        return testaaja.lue();
+    }
+    
+    public String testaaTehokkuus() {
+        Testaaja testaaja = new SuorituskykyTestaaja();
+        testaaja.testaa();
+        return testaaja.lue();
     }
 }

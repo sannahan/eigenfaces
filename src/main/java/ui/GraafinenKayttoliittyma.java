@@ -1,13 +1,16 @@
 package ui;
 
 import domain.Sovelluslogiikka;
-import utils.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -31,13 +34,13 @@ public class GraafinenKayttoliittyma extends Application {
         
         VBox kuvat = luoHavainnollistavatKuvat();
         VBox haku = luoHakutoiminnallisuus();
-        HBox tilastot = luoTilastot();
+        VBox tilastot = luoTilastot();
         
         asettelu.setLeft(kuvat);
-        asettelu.setRight(haku);
-        asettelu.setBottom(tilastot);
+        asettelu.setCenter(haku);
+        asettelu.setRight(tilastot);
         
-        Insets marginaali = new Insets(10);
+        Insets marginaali = new Insets(20);
         BorderPane.setMargin(kuvat, marginaali);
         BorderPane.setMargin(haku, marginaali);
         BorderPane.setMargin(tilastot, marginaali);
@@ -91,31 +94,78 @@ public class GraafinenKayttoliittyma extends Application {
         return hakuToiminnallisuus;
     }
     
-    public HBox luoTilastot() {
-        HBox tilastot = new HBox();
+    private VBox luoTilastot() {
+        VBox tilastot = new VBox();
         tilastot.setSpacing(10);
         
         VBox napit = new VBox();
         napit.setSpacing(10);
-        Button nappiOnnistumisprosenteille = new Button("Testaa onnistumisprosentit");
-        Button nappiSuorituskykytesteille = new Button("Suorita tehokkuustestit");
+        Button nappiOnnistumisprosenteille = new Button("Onnistumisprosentit (n. 10 s)");
+        Button nappiSuorituskykytesteille = new Button("Suorituskykytestit (n. 30 min)");
         napit.getChildren().addAll(nappiOnnistumisprosenteille, nappiSuorituskykytesteille);
         
-        TextArea tekstikentta = new TextArea();
-        tekstikentta.setPrefColumnCount(20);
+        VBox kaavioAlue = new VBox();
+        kaavioAlue.maxWidth(30);
+        kaavioAlue.maxHeight(100);
         
         nappiOnnistumisprosenteille.setOnAction((event) -> {
-           String onnistumisprosentit = sovelluslogiikka.testaaOnnistumisprosentit();
-           tekstikentta.setText(onnistumisprosentit);
+            kaavioAlue.getChildren().clear();
+            String onnistumisprosentit = sovelluslogiikka.testaaOnnistumisprosentit();
+            String[] onnistumisprosentitArray = onnistumisprosentit.split(";");
+            for (int i = 0; i < 3; i++) {
+               PieChart piirakkakaavio = luoPiirakkakaavio(onnistumisprosentitArray[i+3]);
+               piirakkakaavio.setTitle(onnistumisprosentitArray[i]);
+               kaavioAlue.getChildren().add(piirakkakaavio);
+            }
         });
         
         nappiSuorituskykytesteille.setOnAction((event) -> {
-            
+            kaavioAlue.getChildren().clear();
+            String tulokset = sovelluslogiikka.testaaTehokkuus();
+            String[] tuloksetArray = tulokset.split(",");
+            String[] koot = {tuloksetArray[0], tuloksetArray[1], tuloksetArray[2]};
+            String[] init = {tuloksetArray[3], tuloksetArray[4], tuloksetArray[5]};
+            String[] tunnistus = {tuloksetArray[6], tuloksetArray[7], tuloksetArray[8]};
+            BarChart initTilastot = luoPylvaskaavio(koot, init);
+            initTilastot.setTitle("Eigenface-luokan alustaminen");
+            BarChart tunnistusTilastot = luoPylvaskaavio(koot, tunnistus);
+            tunnistusTilastot.setTitle("Kuvan tunnistaminen");
+            kaavioAlue.getChildren().addAll(initTilastot, tunnistusTilastot);
         });
         
-        tilastot.getChildren().addAll(napit, tekstikentta);
+        tilastot.getChildren().addAll(new Label("Suorita haluamasi testaustoiminnallisuus"), napit, kaavioAlue);
         
         return tilastot;
+    }
+    
+    private PieChart luoPiirakkakaavio(String maara) {
+        PieChart piirakkakaavio = new PieChart();
+        piirakkakaavio.setLegendVisible(false);
+        
+        PieChart.Data pala1 = new PieChart.Data("Tunnistettu", Double.valueOf(maara));
+        PieChart.Data pala2 = new PieChart.Data("Ei tunnistettu", 100 - Double.valueOf(maara));
+
+        piirakkakaavio.getData().add(pala1);
+        piirakkakaavio.getData().add(pala2);
+        
+        return piirakkakaavio;
+    }
+    
+    private BarChart luoPylvaskaavio(String[] luokat, String[] maarat) {
+        CategoryAxis xAkseli = new CategoryAxis();
+        xAkseli.setLabel("Kuvien määrä");
+        NumberAxis yAkseli = new NumberAxis();
+        yAkseli.setLabel("Kulunut aika (ms)");
+        BarChart<String, Number> pylvaskaavio = new BarChart<>(xAkseli, yAkseli);
+        pylvaskaavio.setLegendVisible(false);
+        
+        XYChart.Series tilastot = new XYChart.Series();
+        for (int i = 0; i < luokat.length; i++) {
+            tilastot.getData().add(new XYChart.Data(luokat[i], Double.valueOf(maarat[i])));
+        }
+        
+        pylvaskaavio.getData().add(tilastot);
+        return pylvaskaavio;
     }
     
     public static void main(String[] args) {
