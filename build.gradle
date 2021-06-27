@@ -4,7 +4,10 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
     id 'jacoco'
     id 'checkstyle'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
 }
+
+mainClassName = 'Main'
 
 application {
     mainClass = 'Main'
@@ -18,6 +21,9 @@ javafx {
 jar {
     manifest {
         attributes 'Main-Class': 'Main'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
