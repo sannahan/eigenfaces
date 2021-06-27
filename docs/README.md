@@ -1,6 +1,6 @@
 # Eigenfaces – kasvojentunnistus
 
-Kasvodatan lähde: AT&T Laboratories Cambridge
+Ohjelma on tehty Helsingin yliopiston kurssille Tietorakenteet ja algoritmit -harjoitustyö. Kasvodatan lähde: AT&T Laboratories Cambridge.
 
 ## Käyttöohjeet
 
@@ -20,6 +20,17 @@ Checkstyle-tarkastus suoritetaan komennolla
 ```
 ./gradlew checkstyleMain
 ```
+Jar generoidaan komennolla
+```
+./gradlew shadowJar
+```
+Jar ajetaan komennolla
+```
+java -jar build/libs/eigenfaces-all.jar
+```
+Kansion att_faces tulee löytyä juurihakemistosta jaria ajettaessa. 
+
+Ohjelma ei tarkista annettuja syötteitä, mutta hakutoiminnallisuus toimii toivotusti syötteillä 20-29 (hlö) ja 5-10 (kuva).
 
 ## Raportit
 
