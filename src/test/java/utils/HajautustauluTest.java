@@ -37,4 +37,31 @@ public class HajautustauluTest {
         this.hajautustaulu.lisaa(1, "yksi");
         assertEquals("yksi", this.hajautustaulu.poista(1));
     }
+    
+    @Test
+    public void hajautustauluKasvaaTarvittaessa() {
+        for (int i = 0; i < 15; i++) {
+            this.hajautustaulu.lisaa(i, String.valueOf(i));
+        }
+        assertEquals(15, this.hajautustaulu.koko());
+    }
+    
+    @Test
+    public void arvotLoytyvatHajautustaulunKasvattamisenJalkeen() {
+        for (int i = 0; i < 15; i++) {
+            this.hajautustaulu.lisaa(i, String.valueOf(i));
+        }
+        boolean kaikkiLoytyivat = true;
+        for (int i = 0; i < 15; i++) {
+            if (!this.hajautustaulu.hae(i).equals(String.valueOf(i))) {
+                kaikkiLoytyivat = false;
+            }
+        }
+        assertTrue(kaikkiLoytyivat);
+    }
+    
+    @Test
+    public void josPoistettavaaEiLoydyPalautetaanNull() {
+        assertEquals(null, this.hajautustaulu.poista(1));
+    }
 }

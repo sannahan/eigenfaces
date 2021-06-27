@@ -40,7 +40,7 @@ public class Hajautustaulu<K,V> {
     }
     
     private int laskeHajautusarvo(K avain, int pituus) {
-        return Math.abs(avain.hashCode() % pituus);
+        return Math.abs(avain.hashCode()) % pituus;
     }
     
     /**
@@ -96,6 +96,10 @@ public class Hajautustaulu<K,V> {
     private void kopioi(Lista<Pari<K,V>>[] uusi, int indeksista) {
         Lista<Pari<K,V>> paritIndeksista = this.hajautustaulu[indeksista];
         
+        if (paritIndeksista == null) {
+            return;
+        }
+        
         for (int i = 0; i < paritIndeksista.koko(); i++) {
             Pari<K,V> pari = paritIndeksista.anna(i);
             int uusiHajautusarvo = laskeHajautusarvo(pari.getAvain(), uusi.length);
@@ -130,5 +134,9 @@ public class Hajautustaulu<K,V> {
         Pari<K,V> pari = arvotIndeksissa.anna(indeksi);
         arvotIndeksissa.poista(pari);
         return pari.getArvo();
+    }
+    
+    public int koko() {
+        return this.arvoja;
     }
 }
